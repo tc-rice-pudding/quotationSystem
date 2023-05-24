@@ -4,32 +4,17 @@
       <div class="position">
         <label class="label">省</label>
         <el-select v-model="positionForm.projectProvince" filterable size="small">
-          <el-option
-            v-for="item in provinceOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in provinceOptions" :key="item.value" :label="item.label" :value="item.label" />
         </el-select>
 
         <label class="label">市</label>
         <el-select v-model="positionForm.projectCity" filterable size="small">
-          <el-option
-            v-for="item in cityOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in cityOptions" :key="item.value" :label="item.label" :value="item.label" />
         </el-select>
 
         <label class="label">区</label>
         <el-select v-model="positionForm.projectArea" filterable size="small">
-          <el-option
-            v-for="item in areaOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in areaOptions" :key="item.value" :label="item.label" :value="item.label" />
         </el-select>
       </div>
     </header>
@@ -52,31 +37,21 @@
       </div>
     </section>
     <footer class="footer">
-      <el-button class="config-btn" size="large" @click="startConfigHandel"
-        >开始配置</el-button
-      >
+      <el-button class="config-btn" size="large" @click="startConfigHandel">开始配置</el-button>
     </footer>
   </div>
 </template>
 
 <script>
-import { regionData, CodeToText, TextToCode } from "element-china-area-data";
-import {
-  defineComponent,
-  inject,
-  reactive,
-  toRefs,
-  watch,
-  watchEffect,
-  computed,
-} from "vue";
-import { useRouter, useRoute } from "vue-router";
-import { ElMessage } from "element-plus";
+import { regionData, CodeToText, TextToCode } from 'element-china-area-data';
+import { defineComponent, inject, reactive, toRefs, watch, watchEffect, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ElMessage } from 'element-plus';
 
 export default defineComponent({
-  name: "Main",
+  name: 'Main',
   setup() {
-    const pageConfig = inject("pageConfig", { formData: {}, list: [] });
+    const pageConfig = inject('pageConfig');
     const router = useRouter();
     const route = useRoute();
 
@@ -86,10 +61,10 @@ export default defineComponent({
       areaOptions: [],
     });
     const positionForm = reactive({
-      projectProvince: "",
-      projectCity: "",
-      projectArea: "",
-      goodsType: "",
+      projectProvince: '',
+      projectCity: '',
+      projectArea: '',
+      goodsType: '',
     });
     Object.assign(positionForm, pageConfig.formData);
 
@@ -98,25 +73,17 @@ export default defineComponent({
     });
 
     const getActiveImg = computed(() => {
-      return (
-        config.list.find((it) => it.label === positionForm.goodsType)?.imgUrl ||
-        ""
-      );
+      return config.list.find(it => it.label === positionForm.goodsType)?.imgUrl || '';
     });
 
     watch(
       () => positionForm.projectProvince,
       () => {
-        positionOptions.cityOptions =
-          regionData.find((it) => it.value === positionForm.projectProvince)
-            ?.children || [];
+        positionOptions.cityOptions = regionData.find(it => it.label === positionForm.projectProvince)?.children || [];
 
-        let currAllKeys = positionOptions.cityOptions.map((it) => it.value);
-        if (
-          positionForm.projectCity !== "" &&
-          !currAllKeys.includes(positionForm.projectCity)
-        ) {
-          positionForm.projectCity = "";
+        let currAllKeys = positionOptions.cityOptions.map(it => it.label);
+        if (positionForm.projectCity !== '' && !currAllKeys.includes(positionForm.projectCity)) {
+          positionForm.projectCity = '';
         }
       },
       {
@@ -126,17 +93,11 @@ export default defineComponent({
     watch(
       () => positionForm.projectCity,
       () => {
-        positionOptions.areaOptions =
-          positionOptions.cityOptions.find(
-            (it) => it.value === positionForm.projectCity
-          )?.children || [];
+        positionOptions.areaOptions = positionOptions.cityOptions.find(it => it.label === positionForm.projectCity)?.children || [];
 
-        let currAllKeys = positionOptions.areaOptions.map((it) => it.value);
-        if (
-          positionForm.projectArea !== "" &&
-          !currAllKeys.includes(positionForm.projectArea)
-        ) {
-          positionForm.projectArea = "";
+        let currAllKeys = positionOptions.areaOptions.map(it => it.label);
+        if (positionForm.projectArea !== '' && !currAllKeys.includes(positionForm.projectArea)) {
+          positionForm.projectArea = '';
         }
       },
       {
@@ -146,33 +107,29 @@ export default defineComponent({
 
     watchEffect(() => {
       pageConfig.formData = Object.assign({}, positionForm);
-      console.log(pageConfig.formData);
     });
 
-    const checkHandel = (item) => {
+    const checkHandel = item => {
       positionForm.goodsType = item.label;
     };
 
     const startConfigHandel = () => {
       console.log(route.query);
-      if (
-        !positionForm.projectProvince ||
-        !positionForm.projectCity ||
-        !positionForm.projectArea
-      ) {
+      if (!positionForm.projectProvince || !positionForm.projectCity || !positionForm.projectArea) {
         ElMessage({
           showClose: true,
-          type: "error",
-          message: "请选择省份信息!",
+          type: 'error',
+          message: '请选择省份信息!',
         });
         return;
       }
 
       Object.assign(pageConfig.formData, positionForm);
+      console.log(pageConfig);
       const { userId, userName } = route.query;
       router.push({
-        path: "/micromodule",
-        query: { activeLabel: positionForm.goodsType, userId, userName },
+        path: '/micromodule',
+        query: { activeLabel: positionForm.goodsType, userId: userId || '', userName: userName || '' },
       });
     };
 

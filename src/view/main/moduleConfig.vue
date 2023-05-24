@@ -5,43 +5,44 @@
         v-for="menu in pageConfig.menuList"
         :key="menu.label"
         @click="menuClick(menu)"
-        :class="{ 'nav-item': true, 'active': pageConfig.activeMenu===menu.label }"
-      >{{menu.label}}</label>
+        :class="{ 'nav-item': true, active: pageConfig.activeMenu === menu.label }"
+        >{{ menu.label }}</label
+      >
     </header>
     <section>
       <el-scrollbar>
         <template v-for="widget in pageConfig.activeWidgetList" :key="widget.id">
           <custom-slider
             :ref="widgetRef"
-            v-if="widget.type ==='CustomSlider'"
+            v-if="widget.type === 'CustomSlider'"
             :id="widget.id"
             :config="widget.config"
             :parentWidgets="pageConfig.menuList"
           />
           <custom-radio-group
             :ref="widgetRef"
-            v-if="widget.type ==='CustomRadioGroup'"
+            v-if="widget.type === 'CustomRadioGroup'"
             :id="widget.id"
             :config="widget.config"
             :parentWidgets="pageConfig.menuList"
           />
           <custom-input-check
             :ref="widgetRef"
-            v-if="widget.type ==='CustomInputCheck'"
+            v-if="widget.type === 'CustomInputCheck'"
             :id="widget.id"
             :config="widget.config"
             :parentWidgets="pageConfig.menuList"
           />
           <custom-btn-group
             :ref="widgetRef"
-            v-if="widget.type ==='CustomBtnGroup'"
+            v-if="widget.type === 'CustomBtnGroup'"
             :id="widget.id"
             :config="widget.config"
             :parentWidgets="pageConfig.menuList"
           />
           <custom-number-input
             :ref="widgetRef"
-            v-if="widget.type ==='CustomNumberInput'"
+            v-if="widget.type === 'CustomNumberInput'"
             :id="widget.id"
             :config="widget.config"
             :parentWidgets="pageConfig.menuList"
@@ -56,7 +57,7 @@
     </footer>
   </div>
 
-  <quotation-config ref="quotationConfigRef" :position="pageConfig.formData" :menuList="pageConfig.menuList"/>
+  <quotation-config ref="quotationConfigRef" :position="config.formData" :menuList="pageConfig.menuList" />
 </template>
 
 <script>
@@ -95,14 +96,8 @@ export default defineComponent({
       widgetRefMap: {}, // 每个菜单一个 []，存放这个菜单下的所有实例
     });
 
-    const isFirstStep = computed(
-      () => pageConfig.menuLabelList.indexOf(pageConfig.activeMenu) === 0
-    );
-    const isLastStep = computed(
-      () =>
-        pageConfig.menuLabelList.indexOf(pageConfig.activeMenu) ===
-        pageConfig.menuLabelList.length - 1
-    );
+    const isFirstStep = computed(() => pageConfig.menuLabelList.indexOf(pageConfig.activeMenu) === 0);
+    const isLastStep = computed(() => pageConfig.menuLabelList.indexOf(pageConfig.activeMenu) === pageConfig.menuLabelList.length - 1);
 
     // 收集组件
     const widgetRef = widgetInstance => {
@@ -122,9 +117,7 @@ export default defineComponent({
       console.log('校验表单');
       let validateRes = [];
       widgetList.forEach(widget => {
-        widget.config.hide === true
-          ? validateRes.push(widget)
-          : validateRes.push(widget.validateFn());
+        widget.config.hide === true ? validateRes.push(widget) : validateRes.push(widget.validateFn());
       });
 
       console.log(validateRes);
@@ -140,8 +133,7 @@ export default defineComponent({
         if (!pass) {
           if (
             pageConfig.activeMenu !== '' &&
-            pageConfig.menuLabelList.indexOf(menu.label) >
-              pageConfig.menuLabelList.indexOf(pageConfig.activeMenu)
+            pageConfig.menuLabelList.indexOf(menu.label) > pageConfig.menuLabelList.indexOf(pageConfig.activeMenu)
           ) {
             return;
           }
@@ -160,8 +152,7 @@ export default defineComponent({
     watch(
       () => route.query.activeLabel,
       () => {
-        pageConfig.menuList =
-          config.list.find(it => it.label === route.query.activeLabel)?.menuList || [];
+        pageConfig.menuList = config.list.find(it => it.label === route.query.activeLabel)?.menuList || [];
         pageConfig.menuLabelList = pageConfig.menuList.map(it => it.label);
         menuClick(pageConfig.menuList[0] || {}); // 初始化操作
       },
@@ -174,7 +165,7 @@ export default defineComponent({
       // todo
       // 生成报价单
       console.log('生成报价单');
-      console.log(pageConfig.menuList);
+      console.log(pageConfig);
       quotationConfigRef.value.openQuotationDialog();
     };
 
@@ -189,11 +180,8 @@ export default defineComponent({
     const nextHandel = () => {
       if (!isLastStep.value) {
         // 表单校验
-        if (
-          pageConfig.activeMenu !== '' &&
-          !validaCurMenuWidget(pageConfig.widgetRefMap[pageConfig.activeMenu])
-        ) {
-          ElMessage({showClose: true,type:'error',message:'请把表单填写完整!'});
+        if (pageConfig.activeMenu !== '' && !validaCurMenuWidget(pageConfig.widgetRefMap[pageConfig.activeMenu])) {
+          ElMessage({ showClose: true, type: 'error', message: '请把表单填写完整!' });
           return;
         }
         let activeMenuInx = pageConfig.menuLabelList.indexOf(pageConfig.activeMenu);
@@ -204,6 +192,7 @@ export default defineComponent({
     };
 
     return {
+      config,
       widgetRef,
       pageConfig,
       menuClick,
