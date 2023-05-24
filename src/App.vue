@@ -444,44 +444,44 @@ export default defineComponent({
                     ],
                   },
                 },
-                // {
-                //   type: 'CustomRadioGroup',
-                //   id: '567767622',
-                //   config: {
-                //     formMap: {
-                //       name: 'xdwz',
-                //       value: '',
-                //     },
-                //     customValida: {
-                //       codeString: `
-                //         if({{xdwz}} === '正落差'){
-                //           ##ktnwjczjj##.config.max = 15;
-                //           ##ktnwjczjj##.config.hide = true;
-                //           setTimeout(()=>{
-                //             ##ktnwjczjj##.config.hide = false;
-                //           },100);
-                //         }else if({{xdwz}} === '负落差'){
-                //           ##ktnwjczjj##.config.max = 20;
-                //           ##ktnwjczjj##.config.hide = true;
-                //           setTimeout(()=>{
-                //             ##ktnwjczjj##.config.hide = false;
-                //           },100);
-                //         }
-                //         if({{xdwz}} === '正落差'&&Number({{ktnwjczjj}})>15){
-                //           ##ktnwjczjj##.config.formMap.value = 15;
-                //         }else if({{xdwz}} === '负落差'&&Number({{ktnwjczjj}})>20){
-                //           ##ktnwjczjj##.config.formMap.value = 20;
-                //         }
-                //       `,
-                //     },
-                //     tips: '正落差指室内机位于室外机上方；负落差指室内机位于室外机下方',
-                //     label: '相对位置',
-                //     options: [
-                //       { label: '正落差', value: '正落差' },
-                //       { label: '负落差', value: '负落差' },
-                //     ],
-                //   },
-                // },
+                {
+                  type: 'CustomRadioGroup',
+                  id: '567767622',
+                  config: {
+                    formMap: {
+                      name: 'xdwz',
+                      value: '',
+                    },
+                    customValida: {
+                      codeString: `
+                        if({{xdwz}} === '正落差'){
+                          ##ktnwjczjj##.config.max = 5;
+                          ##ktnwjczjj##.config.hide = true;
+                          setTimeout(()=>{
+                            ##ktnwjczjj##.config.hide = false;
+                          },100);
+                        }else if({{xdwz}} === '负落差'){
+                          ##ktnwjczjj##.config.max = 20;
+                          ##ktnwjczjj##.config.hide = true;
+                          setTimeout(()=>{
+                            ##ktnwjczjj##.config.hide = false;
+                          },100);
+                        }
+                        if({{xdwz}} === '正落差'&&Number({{ktnwjczjj}})>5){
+                          ##ktnwjczjj##.config.formMap.value = 5;
+                        }else if({{xdwz}} === '负落差'&&Number({{ktnwjczjj}})>20){
+                          ##ktnwjczjj##.config.formMap.value = 20;
+                        }
+                      `,
+                    },
+                    tips: '正落差指室内机位于室外机上方；负落差指室内机位于室外机下方',
+                    label: '相对位置',
+                    options: [
+                      { label: '正落差', value: '正落差' },
+                      { label: '负落差', value: '负落差' },
+                    ],
+                  },
+                },
                 {
                   type: 'CustomNumberInput',
                   id: '87656576543654232',
@@ -579,7 +579,7 @@ export default defineComponent({
                       value: 0,
                       type: 'number',
                     },
-                    hide: false,
+                    hide: true,
                     precision: 0,
                     step: 1,
                     min: 0,
@@ -597,7 +597,7 @@ export default defineComponent({
                       value: 0,
                       type: 'number',
                     },
-                    hide: false,
+                    hide: true,
                     precision: 0,
                     step: 1,
                     min: 0,
@@ -962,12 +962,63 @@ export default defineComponent({
                       name: 'isSetBatteryMonitor',
                       value: '',
                     },
+                    customValida: {
+                      codeString: `if({{sfyxdc}} === '不配置' && {{isSetBatteryMonitor}} == 'true'){
+                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
+                        ##xdczzs##.config.hide = false;
+                        ##xdczjs##.config.hide = false;
+                      }else{
+                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
+                        setTimeout(()=>{
+                          ##xdczzs##.config.hide = true;
+                          ##xdczjs##.config.hide = true;
+                          ##xdczzs##.config.formMap.value='';
+                          ##xdczjs##.config.formMap.value='';
+                        },100);
+                      }`,
+                    },
                     tips: '蓄电池检测物料包含智能网关，蓄电池内阻采集模块，电池组电流采集模块',
                     label: '是否配置蓄电池检测',
                     options: [
                       { label: '配置', value: true },
                       { label: '不配置', value: false },
                     ],
+                  },
+                },
+                {
+                  type: 'CustomNumberInput',
+                  id: '872222656576543654232',
+                  config: {
+                    formMap: {
+                      name: 'xdczzs',
+                      value: 0,
+                      type: 'number',
+                    },
+                    hide: true,
+                    precision: 0,
+                    step: 1,
+                    min: 0,
+                    max: 100,
+                    tips: '请输入需要检测的蓄电池的总组数',
+                    label: '蓄电池总组数',
+                  },
+                },
+                {
+                  type: 'CustomNumberInput',
+                  id: '8765657444446543654232',
+                  config: {
+                    formMap: {
+                      name: 'xdczjs',
+                      value: 0,
+                      type: 'number',
+                    },
+                    hide: true,
+                    precision: 0,
+                    step: 1,
+                    min: 0,
+                    max: 100,
+                    tips: '请输入需要检测的蓄电池的总节数',
+                    label: '蓄电池总节数',
                   },
                 },
                 {
