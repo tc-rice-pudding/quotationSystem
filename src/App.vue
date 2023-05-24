@@ -444,6 +444,44 @@ export default defineComponent({
                     ],
                   },
                 },
+                // {
+                //   type: 'CustomRadioGroup',
+                //   id: '567767622',
+                //   config: {
+                //     formMap: {
+                //       name: 'xdwz',
+                //       value: '',
+                //     },
+                //     customValida: {
+                //       codeString: `
+                //         if({{xdwz}} === '正落差'){
+                //           ##ktnwjczjj##.config.max = 15;
+                //           ##ktnwjczjj##.config.hide = true;
+                //           setTimeout(()=>{
+                //             ##ktnwjczjj##.config.hide = false;
+                //           },100);
+                //         }else if({{xdwz}} === '负落差'){
+                //           ##ktnwjczjj##.config.max = 20;
+                //           ##ktnwjczjj##.config.hide = true;
+                //           setTimeout(()=>{
+                //             ##ktnwjczjj##.config.hide = false;
+                //           },100);
+                //         }
+                //         if({{xdwz}} === '正落差'&&Number({{ktnwjczjj}})>15){
+                //           ##ktnwjczjj##.config.formMap.value = 15;
+                //         }else if({{xdwz}} === '负落差'&&Number({{ktnwjczjj}})>20){
+                //           ##ktnwjczjj##.config.formMap.value = 20;
+                //         }
+                //       `,
+                //     },
+                //     tips: '正落差指室内机位于室外机上方；负落差指室内机位于室外机下方',
+                //     label: '相对位置',
+                //     options: [
+                //       { label: '正落差', value: '正落差' },
+                //       { label: '负落差', value: '负落差' },
+                //     ],
+                //   },
+                // },
                 {
                   type: 'CustomNumberInput',
                   id: '87656576543654232',
@@ -510,10 +548,12 @@ export default defineComponent({
                       value: '',
                     },
                     customValida: {
-                      codeString: `if({{sfyxdc}} === '不配置' && {{isSetBatteryMonitor}} == true){
+                      codeString: `if({{sfyxdc}} === '不配置' && {{isSetBatteryMonitor}} == 'true'){
+                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
                         ##xdczzs##.config.hide = false;
                         ##xdczjs##.config.hide = false;
                       }else{
+                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
                         setTimeout(()=>{
                           ##xdczzs##.config.hide = true;
                           ##xdczjs##.config.hide = true;
@@ -539,7 +579,7 @@ export default defineComponent({
                       value: 0,
                       type: 'number',
                     },
-                    hide: true,
+                    hide: false,
                     precision: 0,
                     step: 1,
                     min: 0,
@@ -557,7 +597,7 @@ export default defineComponent({
                       value: 0,
                       type: 'number',
                     },
-                    hide: true,
+                    hide: false,
                     precision: 0,
                     step: 1,
                     min: 0,

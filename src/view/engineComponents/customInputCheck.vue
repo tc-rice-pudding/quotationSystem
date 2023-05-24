@@ -15,6 +15,7 @@
         v-model="inputVal"
         :placeholder="config.placeholder"
         clearable
+        onkeyup="this.value = this.value.replace(/[^\d.]/g,'');"
         @focus="inputFocus"
         @change="inputFocus"
       />

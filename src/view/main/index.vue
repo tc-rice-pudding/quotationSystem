@@ -3,7 +3,7 @@
     <header>
       <div class="position">
         <label class="label">省</label>
-        <el-select v-model="positionForm.projectProvince" size="small">
+        <el-select v-model="positionForm.projectProvince" filterable size="small">
           <el-option
             v-for="item in provinceOptions"
             :key="item.value"
@@ -13,7 +13,7 @@
         </el-select>
 
         <label class="label">市</label>
-        <el-select v-model="positionForm.projectCity" size="small">
+        <el-select v-model="positionForm.projectCity" filterable size="small">
           <el-option
             v-for="item in cityOptions"
             :key="item.value"
@@ -23,7 +23,7 @@
         </el-select>
 
         <label class="label">区</label>
-        <el-select v-model="positionForm.projectArea" size="small">
+        <el-select v-model="positionForm.projectArea" filterable size="small">
           <el-option
             v-for="item in areaOptions"
             :key="item.value"
