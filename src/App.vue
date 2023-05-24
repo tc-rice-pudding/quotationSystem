@@ -74,7 +74,7 @@ export default defineComponent({
                     max: 10,
                     step: 1,
                     tips: '用户根据需求确定微模块中IT机柜的平均功率，IT单柜负载在3-10整数范围内可选，IT单柜负载与所需IT机柜数量的乘积不高于250kva',
-                    label: 'IT柜单柜负载',
+                    label: 'IT柜单柜负载（kva）',
                     defaultVal: 20,
                   },
                 },
@@ -84,7 +84,7 @@ export default defineComponent({
                   config: {
                     formMap: {
                       name: 'jgsd',
-                      value: '',
+                      value: '1200',
                     },
                     tips: 'IT机柜深度决定各类机柜深度，空调深度，机柜配件深度',
                     label: 'IT机柜深度(mm)',
@@ -161,7 +161,7 @@ export default defineComponent({
                     tips: '手动推拉门为经济性价比方案，自动平移门为高端方案，附带75寸平移门触摸屏',
                     label: '通道门类型',
                     options: [
-                      { label: '手动平移门', value: '手动平移门' },
+                      { label: '手动推拉门', value: '手动推拉门' },
                       { label: '自动平移门', value: '自动平移门' },
                     ],
                   },
@@ -174,7 +174,7 @@ export default defineComponent({
                       name: 'tdlx',
                       value: '',
                     },
-                    tips: 'aaa',
+                    tips: '单通道适用于有一侧靠墙的组合；双通道适用于两侧都有机柜的通道场合',
                     label: '通道类型',
                     options: [
                       { label: '单通道', value: '单通道' },
@@ -544,7 +544,7 @@ export default defineComponent({
                     step: 1,
                     min: 0,
                     max: 100,
-                    tips: 'aaa',
+                    tips: '请输入需要检测的蓄电池的总组数',
                     label: '蓄电池总组数',
                   },
                 },
@@ -562,7 +562,7 @@ export default defineComponent({
                     step: 1,
                     min: 0,
                     max: 100,
-                    tips: 'aaa',
+                    tips: '请输入需要检测的蓄电池的总节数',
                     label: '蓄电池总节数',
                   },
                 },
@@ -572,7 +572,7 @@ export default defineComponent({
                   config: {
                     formMap: {
                       name: 'sxtgs',
-                      value: 1,
+                      value: 2,
                       type: 'number',
                     },
                     customValida: {
@@ -668,7 +668,7 @@ export default defineComponent({
                         if({{itgsl}}>=0 && {{itgsl}}<=5){
                           ##itgdgfz##.config.min = 2;
                           ##itgdgfz##.config.max = 5;
-                          ##itgdgfz##.config.formMap.value = 5;
+                          ##itgdgfz##.config.formMap.value = 2;
                         }else if({{itgsl}}>=6 && {{itgsl}} <=7){
                           ##itgdgfz##.config.min = 2;
                           ##itgdgfz##.config.max = 4;
@@ -694,14 +694,14 @@ export default defineComponent({
                   config: {
                     formMap: {
                       name: 'itgdgfz',
-                      value: '',
+                      value: '2',
                     },
                     min: 2,
                     max: 5,
                     step: 1,
                     tips: 'IT单柜负载范围在2—5范围可选，且IT单柜负载*所需IT机柜数量<=28',
-                    label: 'IT柜单柜负载',
-                    defaultVal: 20,
+                    label: 'IT柜单柜负载（kva）',
+                    defaultVal: 2,
                   },
                 },
                 {
@@ -992,6 +992,8 @@ export default defineComponent({
                       value: '',
                       type: 'number',
                     },
+                    step: 1,
+                    min: 1,
                     tips: '若用户同种配置需要多套时可在此输入需要配置的套数',
                     label: '一体化柜配置套数',
                   },
