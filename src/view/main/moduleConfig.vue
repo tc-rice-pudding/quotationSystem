@@ -57,7 +57,7 @@
     </footer>
   </div>
 
-  <quotation-config ref="quotationConfigRef" :position="config.formData" :menuList="pageConfig.menuList" />
+  <quotation-config ref="quotationConfigRef" :position="config.formData" :menuList="pageConfig.menuList" :allFormName="pageConfig.allFormName" />
 </template>
 
 <script>
@@ -84,7 +84,6 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const config = inject('pageConfig', { formData: {}, list: [] });
-    console.log(config);
 
     const quotationConfigRef = ref('');
 
@@ -94,6 +93,7 @@ export default defineComponent({
       activeWidgetList: [],
       activeMenu: '',
       widgetRefMap: {}, // 每个菜单一个 []，存放这个菜单下的所有实例
+      allFormName: {},
     });
 
     const isFirstStep = computed(() => pageConfig.menuLabelList.indexOf(pageConfig.activeMenu) === 0);
@@ -162,10 +162,23 @@ export default defineComponent({
     );
 
     const quotationHandel = () => {
-      // todo
-      // 生成报价单
+      pageConfig.allFormName = Array.from(
+        new Set(
+          config.list
+            .map(page => page.menuList)
+            .flat(10)
+            .map(it => it.widgetList)
+            .flat(10)
+            .map(it => it.config.formMap.name)
+        )
+      ).reduce((obj, curr) => {
+        obj[curr] = '';
+        return obj;
+      }, {});
+
       console.log('生成报价单');
       console.log(pageConfig);
+      console.log(config);
       quotationConfigRef.value.openQuotationDialog();
     };
 

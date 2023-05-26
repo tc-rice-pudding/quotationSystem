@@ -89,6 +89,7 @@ export default defineComponent({
       },
       {
         immediate: true,
+        deep: true
       }
     );
 
@@ -100,6 +101,7 @@ export default defineComponent({
       },
       {
         immediate: true,
+        deep: true
       }
     );
 

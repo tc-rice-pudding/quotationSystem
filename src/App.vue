@@ -261,7 +261,8 @@ export default defineComponent({
                       value: '',
                     },
                     customValida: {
-                      codeString: `if({{sfyxdc}} === '配置'){
+                      codeString: `
+                      if({{sfyxdc}} === '配置'){
                         if({{itgsl}} * {{itgdgfz}} <= 25){
                           setTimeout(()=>{
                             ##xdcwz##.config.hide = false;
@@ -306,7 +307,7 @@ export default defineComponent({
                           ##xdcwz##.config.hide = false;
                         }else{
                           ##xdcwz##.config.hide = true;
-                          ##xdcwz##.config.formMap.value='';
+                          ##xdcwz##.config.formMap.value='微模块外部';
                         }
 
                         let condition = [];
@@ -327,7 +328,6 @@ export default defineComponent({
                           ];
                         }
                         ##upshbsj##.config.options = condition;
-                        ##upshbsj##.config.formMap.value='';
                       `,
                     },
                     hide: true,
@@ -346,7 +346,7 @@ export default defineComponent({
                   config: {
                     formMap: {
                       name: 'xdcwz',
-                      value: '',
+                      value: '微模块外部',
                     },
                     hide: true,
                     tips: '微模块内最多可放置2个电池柜用于蓄电池的放置，若机房总负载超过60kva则蓄电池安装位置默认放置在微模块外部',
@@ -549,11 +549,9 @@ export default defineComponent({
                     },
                     customValida: {
                       codeString: `if({{sfyxdc}} === '不配置' && {{isSetBatteryMonitor}} == 'true'){
-                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
                         ##xdczzs##.config.hide = false;
                         ##xdczjs##.config.hide = false;
                       }else{
-                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
                         setTimeout(()=>{
                           ##xdczzs##.config.hide = true;
                           ##xdczjs##.config.hide = true;
@@ -964,11 +962,9 @@ export default defineComponent({
                     },
                     customValida: {
                       codeString: `if({{sfyxdc}} === '不配置' && {{isSetBatteryMonitor}} == 'true'){
-                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
                         ##xdczzs##.config.hide = false;
                         ##xdczjs##.config.hide = false;
                       }else{
-                        console.log({{sfyxdc}},{{isSetBatteryMonitor}})
                         setTimeout(()=>{
                           ##xdczzs##.config.hide = true;
                           ##xdczjs##.config.hide = true;
@@ -1095,6 +1091,8 @@ export default defineComponent({
         },
       ],
     });
+
+    console.log(pageConfig);
 
     provide('pageConfig', pageConfig);
   },

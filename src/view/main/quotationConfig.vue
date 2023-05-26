@@ -75,6 +75,7 @@ export default defineComponent({
   props: {
     menuList: Array,
     position: Object,
+    allFormName: Object,
   },
   components: { CommonDialog },
   setup(props) {
@@ -410,7 +411,7 @@ export default defineComponent({
         }, menuListForm);
       });
 
-      let params = Object.assign({}, props.position, menuListForm, quotationFormConfig.form);
+      let params = Object.assign({}, props.allFormName, props.position, menuListForm, quotationFormConfig.form);
 
       const { userId, userName } = route.query;
       axios
