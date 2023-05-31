@@ -1,5 +1,5 @@
 <template>
-  <div class="slider-view">
+  <div class="slider-view" v-show="!config.hide">
     <div class="title">
       <el-tooltip placement="top" effect="light" v-if="config.tips.length>0" v-model="clickFlag" manual="true">
         <template #content>{{config.tips}}</template>

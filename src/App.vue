@@ -74,7 +74,7 @@ export default defineComponent({
                     max: 10,
                     step: 1,
                     tips: '用户根据需求确定微模块中IT机柜的平均功率，IT单柜负载在3-10整数范围内可选，IT单柜负载与所需IT机柜数量的乘积不高于250kva',
-                    label: 'IT柜单柜负载（kva）',
+                    label: 'IT柜单柜负载（kw）',
                     defaultVal: 20,
                   },
                 },
@@ -103,7 +103,7 @@ export default defineComponent({
                       value: '',
                       type: 'number',
                     },
-                    tips: '需要用户根据实际需求选择是否配置和配置数量',
+                    tips: '需要用户根据实际需求选择是否配置和输入的配置数量为一套微模块配置该物料的总数量',
                     label: '是否配置轻载层板',
                     placeholder: '配置数量',
                   },
@@ -117,7 +117,7 @@ export default defineComponent({
                       value: '',
                       type: 'number',
                     },
-                    tips: '需要用户根据实际需求选择是否配置和配置数量',
+                    tips: '需要用户根据实际需求选择是否配置和输入的配置数量为一套微模块配置该物料的总数量',
                     label: '是否配置重载层板',
                     placeholder: '配置数量',
                   },
@@ -131,7 +131,7 @@ export default defineComponent({
                       value: '',
                       type: 'number',
                     },
-                    tips: '需要用户根据实际需求选择是否配置和配置数量',
+                    tips: '需要用户根据实际需求选择是否配置和输入的配置数量为一套微模块配置该物料的总数量',
                     label: 'L型导轨配置数量',
                     placeholder: '配置数量',
                   },
@@ -145,7 +145,7 @@ export default defineComponent({
                       value: '',
                       type: 'number',
                     },
-                    tips: '需要用户根据实际需求选择是否配置和配置数量',
+                    tips: '需要用户根据实际需求选择是否配置和输入的配置数量为一套微模块配置该物料的总数量',
                     label: '1U理线架配置数量',
                     placeholder: '配置数量',
                   },
@@ -158,7 +158,7 @@ export default defineComponent({
                       name: 'tdpymlx',
                       value: '',
                     },
-                    tips: '手动推拉门为经济性价比方案，自动平移门为高端方案，附带75寸平移门触摸屏',
+                    tips: '手动推拉门为经济性价比方案，自动平移门为高端方案',
                     label: '通道门类型',
                     options: [
                       { label: '手动推拉门', value: '手动推拉门' },
@@ -388,7 +388,7 @@ export default defineComponent({
                         },300);
                       }`,
                     },
-                    tips: '用户若已选择其他品牌的空调此处可选择不配置',
+                    tips: '用户若选择房间级空调或其他品牌的空调此处可选择不配置',
                     label: '是否配置空调产品',
                     options: [
                       { label: '配置', value: '配置' },
@@ -452,29 +452,54 @@ export default defineComponent({
                       name: 'xdwz',
                       value: '',
                     },
+                    // todo
+                      // 列间空调正落差可选范围为0～20，负落差可选范围0～5
+                      // 底座空调正落差可选范围为0～15，负落差可选范围0～30
                     customValida: {
                       codeString: `
-                        if({{xdwz}} === '正落差'){
-                          ##ktnwjczjj##.config.max = 5;
-                          ##ktnwjczjj##.config.hide = true;
-                          setTimeout(()=>{
-                            ##ktnwjczjj##.config.hide = false;
-                          },100);
-                        }else if({{xdwz}} === '负落差'){
-                          ##ktnwjczjj##.config.max = 20;
-                          ##ktnwjczjj##.config.hide = true;
-                          setTimeout(()=>{
-                            ##ktnwjczjj##.config.hide = false;
-                          },100);
-                        }
-                        if({{xdwz}} === '正落差'&&Number({{ktnwjczjj}})>5){
-                          ##ktnwjczjj##.config.formMap.value = 5;
-                        }else if({{xdwz}} === '负落差'&&Number({{ktnwjczjj}})>20){
-                          ##ktnwjczjj##.config.formMap.value = 20;
+                        if(##ktlx##.config.formMap.value.includes('列间空调')){
+                          if({{xdwz}} === '正落差'){
+                            ##ktnwjczjj##.config.max = 20;
+                            ##ktnwjczjj##.config.hide = true;
+                            setTimeout(()=>{
+                              ##ktnwjczjj##.config.hide = false;
+                            },100);
+                          }else if({{xdwz}} === '负落差'){
+                            ##ktnwjczjj##.config.max = 5;
+                            ##ktnwjczjj##.config.hide = true;
+                            setTimeout(()=>{
+                              ##ktnwjczjj##.config.hide = false;
+                            },100);
+                          }
+                          if({{xdwz}} === '正落差'&&Number({{ktnwjczjj}})>20){
+                            ##ktnwjczjj##.config.formMap.value = 20;
+                          }else if({{xdwz}} === '负落差'&&Number({{ktnwjczjj}})>5){
+                            ##ktnwjczjj##.config.formMap.value = 5;
+                          }
+                        }else if(##ktlx##.config.formMap.value.includes('底座空调')){
+                          if({{xdwz}} === '正落差'){
+                            ##ktnwjczjj##.config.max = 15;
+                            ##ktnwjczjj##.config.hide = true;
+                            setTimeout(()=>{
+                              ##ktnwjczjj##.config.hide = false;
+                            },100);
+                          }else if({{xdwz}} === '负落差'){
+                            ##ktnwjczjj##.config.max = 30;
+                            ##ktnwjczjj##.config.hide = true;
+                            setTimeout(()=>{
+                              ##ktnwjczjj##.config.hide = false;
+                            },100);
+                          }
+                          if({{xdwz}} === '正落差'&&Number({{ktnwjczjj}})>15){
+                            ##ktnwjczjj##.config.formMap.value = 15;
+                          }else if({{xdwz}} === '负落差'&&Number({{ktnwjczjj}})>30){
+                            ##ktnwjczjj##.config.formMap.value = 30;
+                          }
                         }
                       `,
                     },
-                    tips: '正落差指室内机位于室外机上方；负落差指室内机位于室外机下方',
+                    tips: `列间空调：正落差指室外机位于室内机上方；负落差指室外机位于室内机下方列间空调正落差可选范围为0～20，负落差可选范围0～5
+                    底座空调：正落差指室内机位于室外机上方；负落差指室内机位于室外机下方底座空调正落差可选范围为0～15，负落差可选范围0～30`,
                     label: '相对位置',
                     options: [
                       { label: '正落差', value: '正落差' },
@@ -737,8 +762,8 @@ export default defineComponent({
                     min: 2,
                     max: 5,
                     step: 1,
-                    tips: 'IT单柜负载范围在2—5范围可选，且IT单柜负载*所需IT机柜数量<=28',
-                    label: 'IT柜单柜负载（kva）',
+                    tips: 'IT单柜负载范围在2—5kw范围可选，且IT单柜负载*所需IT机柜数量<=28',
+                    label: 'IT柜单柜负载（kw）',
                     defaultVal: 2,
                   },
                 },
@@ -928,7 +953,7 @@ export default defineComponent({
                       name: 'sfpzzcjc',
                       value: '',
                     },
-                    tips: '资产检测物料包含FAU-A现场采集单元，资产检测终端，EIC电子标签',
+                    tips: '资产检测物料包含资产检测终端，EIC电子标签',
                     label: '是否配置资产检测',
                     options: [
                       { label: '配置', value: '配置' },
@@ -1043,10 +1068,16 @@ export default defineComponent({
                     },
                     customValida: {
                       codeString: `
-                        if({{isSetVideoMonitor}} == true){
+                        if({{isSetVideoMonitor}} == 'true'){
+                          setTimeout(()=>{
                             ##sxtgs##.config.hide = false;
-                        }else if({{isSetVideoMonitor}} == false){
-                          ##sxtgs##.config.hide = true;
+                            ##ccts##.config.hide = false;
+                          },300);
+                        }else if({{isSetVideoMonitor}} == 'false'){
+                          setTimeout(()=>{
+                            ##sxtgs##.config.hide = true;
+                            ##ccts##.config.hide = true;
+                          },300);
                         }
                       `,
                     },
@@ -1058,16 +1089,95 @@ export default defineComponent({
                     ],
                   },
                 },
+                // {
+                //   type: 'CustomNumberInput',
+                //   id: '4565654232',
+                //   config: {
+                //     formMap: {
+                //       name: 'sxtgs',
+                //       value: '',
+                //     },
+                //     tips: '摄像头配置个数1——32个可选，视频格式1080p',
+                //     label: '摄像头配置个数',
+                //   },
+                // },
                 {
-                  type: 'CustomNumberInput',
-                  id: '4565654232',
+                  type: 'CustomSlider',
+                  id: '1232111200129992331',
                   config: {
                     formMap: {
                       name: 'sxtgs',
-                      value: '',
+                      value: 2,
+                      type: 'number',
                     },
+                    customValida: {
+                      // ##name## => 获取这个组件的配置
+                      codeString: `
+                        let condition = [];
+                        if({{sxtgs}}<=10){
+                          condition = [
+                            { label: '15', value: '15' },
+                            { label: '30', value: '30' },
+                            { label: '60', value: '60' },
+                            { label: '90', value: '90' },
+                            { label: '120', value: '120' },
+                            { label: '180', value: '180' },
+                          ];
+                        }else if({{sxtgs}}>=11&&{{sxtgs}}<=16){
+                          condition = [
+                            { label: '15', value: '15' },
+                            { label: '30', value: '30' },
+                            { label: '60', value: '60' },
+                            { label: '90', value: '90' },
+                            { label: '120', value: '120' },
+                          ];
+                        }else if({{sxtgs}}>=17&&{{sxtgs}}<=21){
+                          condition = [
+                            { label: '15', value: '15' },
+                            { label: '30', value: '30' },
+                            { label: '60', value: '60' },
+                            { label: '90', value: '90' },
+                          ];
+                        }else if({{sxtgs}}>=22&&{{sxtgs}}<=32){
+                          condition = [
+                            { label: '15', value: '15' },
+                            { label: '30', value: '30' },
+                            { label: '60', value: '60' },
+                          ];
+                        }
+                        ##ccts##.config.options = condition;
+                        ##ccts##.config.formMap.value='';
+                      `,
+                    },
+                    min: 1,
+                    max: 32,
+                    step: 1,
+                    hide: true,
                     tips: '摄像头配置个数1——32个可选，视频格式1080p',
                     label: '摄像头配置个数',
+                    defaultVal: 20,
+                  },
+                },
+                {
+                  type: 'CustomBtnGroup',
+                  id: '542354256',
+                  config: {
+                    formMap: {
+                      name: 'ccts',
+                      value: '',
+                      type: 'number',
+                    },
+                    tips: '用户根据自身存储需求选择摄像头录像视频需要存储的时间',
+                    label: '视频存储时间(天)',
+                    hide: true,
+                    options: [
+                      { label: '15', value: '15' },
+                      { label: '30', value: '30' },
+                      { label: '60', value: '60' },
+                      { label: '90', value: '90' },
+                      { label: '120', value: '120' },
+                      { label: '180', value: '180' },
+                    ],
                   },
                 },
                 {
