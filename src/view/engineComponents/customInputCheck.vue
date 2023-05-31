@@ -151,15 +151,15 @@ export default defineComponent({
     display: inline-block;
     height: 30px;
     line-height: 30px;
-    border: 1px solid rgb(220, 223, 230);
+    border: 2px solid rgb(220, 223, 230);
     border-radius: 2px 4px 4px 2px;
     padding: 0 35px;
     &:hover {
-      border: 1px solid #409eff !important;
+      border: 2px solid #409eff !important;
     }
   }
   .active {
-    border: 1px solid #409eff !important;
+    border: 2px solid #409eff !important;
   }
 }
 ::v-deep(.el-input--small .el-input__inner) {
@@ -167,7 +167,7 @@ export default defineComponent({
   border-right: none !important;
 }
 ::v-deep(.el-input--small .el-input__inner:hover) {
-  border: 0.5px solid #409eff !important;
+  border: 2px solid #409eff !important;
   border-radius: 4px 2px 2px 4px !important;
 }
 </style>

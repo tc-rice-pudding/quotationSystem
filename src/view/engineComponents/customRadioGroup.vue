@@ -131,7 +131,7 @@ export default defineComponent({
   .radio-item {
     box-sizing: border-box;
     &:hover {
-      border: 0.5px solid #409eff !important;
+      border: 2px solid #409eff !important;
     }
   }
 }
@@ -141,7 +141,7 @@ export default defineComponent({
   font-size: 0.6rem;
 }
 ::v-deep(.el-radio-button__orig-radio:checked + .el-radio-button__inner) {
-  border: 1px solid #409eff !important;
+  border: 2px solid #409eff !important;
   background-color: #fff !important;
   color: #000 !important;
 }

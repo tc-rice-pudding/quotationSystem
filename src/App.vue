@@ -413,7 +413,6 @@ export default defineComponent({
                       }else if(['恒温恒湿列间空调','单冷列间空调'].includes({{ktlx}})){
                         setTimeout(()=>{
                           ##sfpzwmkdz##.config.disable = false;
-                          ##sfpzwmkdz##.config.formMap.value='';
                         },300);
                       }`,
                     },
